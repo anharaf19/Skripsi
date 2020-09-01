@@ -22,6 +22,9 @@ import Adddata from"./Adddata";
 import telusurdata from"./telusurdata";
 import telusurdataawal from"./telusurdataawal";
 import telusurdatatelusur from"./telusurdatatelusur";
+import Login from"./Login";
+import Register from"./Register";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 class App extends Component {
 
@@ -89,6 +92,8 @@ class App extends Component {
               <Router>
                 <Switch>
                 <Route exact path="/" component={MainPage} />
+                <Route exact path="/login" component={Login} />
+                <Route exact path="/register" component={Register} />
                 <Route exact path="/404" component={NotFoundPage} />
                 <Route exact path="/DataAwal" component={DataAwal} />
                 <Route exact path="/DataTelusur" component={DataTelusur} />

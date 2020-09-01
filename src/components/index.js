@@ -22,10 +22,10 @@ return (
     <table cellPadding="75px" >
       <tr>
           <td>
-          <Link to='./Adddata'>
-          <img src={masukan} align='center' width="150px" height="150px" className="App-logo" alt="logo" />
-          <p align='center'>Tambah Data</p>
-          </Link>
+            <Link to='./Adddata'>
+            <img src={masukan} align='center' width="150px" height="150px" className="App-logo" alt="logo" />
+            <p align='center'>Tambah Data</p>
+            </Link>
           </td>
           <td>
           <Link to='./telusurdata'>

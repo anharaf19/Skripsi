@@ -3,6 +3,28 @@ import Identicon from 'identicon.js';
 
 class Main4 extends Component {
 
+  componentDidMount() {
+    console.log(this.props.posts);
+  }
+
+  state = {
+    data: this.props.posts.sort(function(a, b) {
+      var dateA = new Date(a.tanggal), dateB = new Date(b.tanggal);
+      return dateA - dateB;
+    })
+  }
+
+  onSearchChange(e) {
+    const sorted =  this.props.posts.sort(function(a, b) {
+      var dateA = new Date(a.tanggal), dateB = new Date(b.tanggal);
+      return dateA - dateB;
+    })
+      
+    this.setState({
+      data: e.target.value ? sorted.filter(data => data.hashawal == e.target.value) : sorted
+    })
+  }
+
   render() {
     return (
       <div className="container-fluid mt-5">
@@ -39,14 +61,15 @@ class Main4 extends Component {
                     id="hashawal"
                     type="input"
                     ref={(input) => { this.hashawal = input }}
+                    onChange={(e) => {this.onSearchChange(e)}}
                     className="form-control"
                     placeholder="hashawal ?"
                     required />
                 </div>
-                <button type="submit" className="btn btn-primary btn-block">Sumbit</button>
+                {/* <button type="submit" className="btn btn-primary btn-block">Sumbit</button> */}
               </form>
               <p>&nbsp;</p>
-              { this.props.posts.map((post, key) => {
+              { this.state.data.map((post, key) => {
                 return(
                   <div className="card mb-4" key={key} >
                     <div className="card-header">
