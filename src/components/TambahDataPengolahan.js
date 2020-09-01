@@ -2,16 +2,15 @@ import React, { Component } from 'react';
 import Web3 from 'web3';
 import Identicon from 'identicon.js';
 import './App.css';
-import Addhash2 from '../abis/Datatelusur.json'
+import Addhash from '../abis/Data.json'
 import Navbar from './Navbar'
-import Main2 from './MainDataTelusur'
-
-import {Link} from "react-router-dom"; 
-
+import Main from './MainDataPengolahan'
+import {Link} from "react-router-dom";  
 
 
 
-class DataTelusur extends Component {
+
+class TambahDataPengolahan extends Component {
 
   async componentWillMount() {
     await this.loadWeb3()
@@ -38,28 +37,28 @@ class DataTelusur extends Component {
     this.setState({ account: accounts[0] })
     // Network ID
     const networkId = await web3.eth.net.getId()
-    const networkData = Addhash2.networks[networkId]
+    const networkData = Addhash.networks[networkId]
     if(networkData) {
-      const addhash2 = web3.eth.Contract(Addhash2.abi, networkData.address)
-      this.setState({ addhash2 })
-      const postCount = await addhash2.methods.postCount().call()
+      const addhash = web3.eth.Contract(Addhash.abi, networkData.address)
+      this.setState({ addhash })
+      const postCount = await addhash.methods.postCount().call()
       this.setState({ postCount })
       // Load Posts
       for (var i = 1; i <= postCount; i++) {
-        const post = await addhash2.methods.posts(i).call()
+        const post = await addhash.methods.posts(i).call()
         this.setState({
           posts: [...this.state.posts, post]
         })
       }
       this.setState({ loading: false})
     } else {
-      window.alert('Addhash2 contract not deployed to detected network.')
+      window.alert('Addhash contract not deployed to detected network.')
     }
   }
 
-  createPost(hashawal,hashtelusur,lokasi,keterangan,tanggal) {
+  createPost(hashawal,hash,email,hakakses,tanggal) {
     this.setState({ loading: true })
-    this.state.addhash2.methods.createPost(hashawal,hashtelusur,lokasi,keterangan,tanggal).send({ from: this.state.account })
+    this.state.addhash.methods.createPost(hashawal,hash,email,hakakses,tanggal).send({ from: this.state.account })
     .once('receipt', (receipt) => {
       this.setState({ loading: false })
     })
@@ -70,7 +69,7 @@ class DataTelusur extends Component {
     super(props)
     this.state = {
       account: '',
-      addhash2: null,
+      addhash: null,
       postCount: 0,
       posts: [],
       loading: true
@@ -85,12 +84,12 @@ class DataTelusur extends Component {
         <Navbar account={this.state.account} />
         { this.state.loading
           ? <div id="loader" className="text-center mt-5"><p>Loading...</p></div>
-          : <Main2
+          : <Main
               posts={this.state.posts}
               createPost={this.createPost}
             />
         }
-                                <Link to='./Adddata'>
+                        <Link to='./'>
                     <textbiasa>Kembali</textbiasa>
                 </Link>
       </div>
@@ -98,4 +97,4 @@ class DataTelusur extends Component {
   }
 }
 
-export default DataTelusur;
+export default TambahDataPengolahan;

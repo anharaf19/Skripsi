@@ -1,9 +1,38 @@
 import React, { Component } from 'react';
 import Identicon from 'identicon.js';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+class MainDataDistribusi extends Component {
 
-class Main2 extends Component {
+  state = {
+    startDate: new Date(),
+    jeniskopi : 'Arabika'
 
+  };
+ 
+  handleChange = date => {
+    this.setState({
+      startDate: date
+    });
+  };
+  
+  onChangejeniskopi = e => {
+    console.log(e.target.value)
+  this.setState({
+      jeniskopi: e.target.value
+  });
+  
+}
   render() {
+    const required = value => {
+      if (!value) {
+        return (
+          <div className="alert alert-danger" role="alert">
+            This field is required!
+          </div>
+        );
+      }
+    };
     return (
       <div className="container-fluid mt-5">
         <div className="row">
@@ -15,42 +44,60 @@ class Main2 extends Component {
                   const IPFS = require('ipfs-mini');
                   const ipfs = new IPFS({host:'ipfs.infura.io' , port : 5001, protocol:'https'});
                   const hashawal = this.hashawal.value
+                  const nama = this.nama.value
                   const lokasi = this.lokasi.value
                   const keterangan = this.keterangan.value
                   const today =new Date()
                   const tanggal = today.toString()
-                  const datatelusur = ["Hash Awal : "+hashawal,"Lokasi : "+lokasi,"Keterangan : "+keterangan,"Tanggal : "+tanggal]
-                  ipfs.add(datatelusur, (err, hash) => {
+                  const tanggaldistribusi = this.state.startDate
+                  const Data = JSON.stringify({"nama":nama,"lokasi":lokasi,"tanggaldistribusi":tanggaldistribusi,"Keterangan":keterangan})
+                  ipfs.add(Data, (err, hash) => {
                     if(err){
                     return console.log(err);
                     }
-                    
                     console.log('https:/ipfs.infura.io/ipfs/'+hash);
-                    this.props.createPost(hashawal,hash,lokasi,keterangan,tanggal)
-                    alert("Data Berhasil disimpan")
+                    this.props.createPost(hashawal,hash,'email','hakakses',tanggal)
+                    alert("Data Berhasil disimpan dengan hash awal sebagai berikut ( "+hash+" ) harap hash tersebut disimpan guna mencari data tersebut kembali..")
                     }
                   ) 
                   
                 }}>
                 <div className="form-group mr-sm-2">
-                  <label>Hash Awal :</label>
+                <label>Hash Awal:</label>
                   <input
                     id="hashawal"
                     type="text"
                     ref={(input) => { this.hashawal = input }}
                     className="form-control"
-                    placeholder="Hash Awal ?"
+                    placeholder="hashawal?"
                     required />
                 </div>
                 <div className="form-group mr-sm-2">
-                  <label>Lokasi :</label>
+                <label>Nama Distributor:</label>
+                  <input
+                    id="nama"
+                    type="text"
+                    ref={(input) => { this.nama = input }}
+                    className="form-control"
+                    placeholder="Nama Distributor?"
+                    required />
+                </div>
+                <div className="form-group mr-sm-2">
+                <label>Lokasi Pendistribusian :</label>
                   <input
                     id="lokasi"
                     type="text"
                     ref={(input) => { this.lokasi = input }}
                     className="form-control"
-                    placeholder="Lokasi ?"
+                    placeholder="lokasi ?"
                     required />
+                </div>
+                <div className="form-group mr-sm-2">
+                      <label>Tanggal Distribusi:</label>
+                      <DatePicker
+                      selected={this.state.startDate}
+                      onChange={this.handleChange}
+                      />
                 </div>
                 <div className="form-group mr-sm-2">
                 <label>Keterangan :</label>
@@ -65,27 +112,6 @@ class Main2 extends Component {
                 <button type="submit" className="btn btn-primary btn-block">Sumbit</button>
               </form>
               <p>&nbsp;</p>
-              {/* { this.props.posts.map((post, key) => {
-                return(
-                  <div className="card mb-4" key={key} >
-                    <div className="card-header">
-                      <img
-                        className='mr-2'
-                        width='30'
-                        height='30'
-                        src={`data:image/png;base64,${new Identicon(post.author, 30).toString()}`}
-                      />
-                      <small className="text-muted">{post.author}</small>
-                    </div>
-                    <ul id="postList" className="list-group list-group-flush">
-                      <li className="list-group-item">
-                        <p>{post.hashawal}</p>
-                        <p>{post.hashtelusur}</p>
-                      </li>
-                    </ul>
-                  </div>
-                )
-              })} */}
             </div>
           </main>
         </div>
@@ -94,4 +120,4 @@ class Main2 extends Component {
   }
 }
 
-export default Main2;
+export default MainDataDistribusi;

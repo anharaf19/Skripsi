@@ -1,7 +1,29 @@
 import React, { Component } from 'react';
 import Identicon from 'identicon.js';
 
-class Main3 extends Component {
+class MainTelusurData extends Component {
+
+  componentDidMount() {
+    console.log(this.props.posts);
+  }
+
+  state = {
+    data: this.props.posts.sort(function(a, b) {
+      var dateA = new Date(a.tanggal), dateB = new Date(b.tanggal);
+      return dateA - dateB;
+    })
+  }
+
+  onSearchChange(e) {
+    const sorted =  this.props.posts.sort(function(a, b) {
+      var dateA = new Date(a.tanggal), dateB = new Date(b.tanggal);
+      return dateA - dateB;
+    })
+      
+    this.setState({
+      data: e.target.value ? sorted.filter(data => data.hashawal == e.target.value) : sorted
+    })
+  }
 
   render() {
     return (
@@ -15,19 +37,18 @@ class Main3 extends Component {
                 //   event.preventDefault()
                 //   const IPFS = require('ipfs-mini');
                 //   const ipfs = new IPFS({host:'ipfs.infura.io' , port : 5001, protocol:'https'});
-                //   const jeniskopi = this.jeniskopi.value
+                //   const hashawal = this.hashawal.value
                 //   const petani = this.petani.value
                 //   const tanam = this.tanam.value
                 //   const keterangan = this.keterangan.value
-                //   const today =new Date()
-                //   const tanggal = today.toString()
-                //   const hashawal = ["Jenis Kopi : "+jeniskopi,"Petani : "+petani,"Ditanam di : "+tanam,"Keterangan : "+keterangan,"Tanggal : "+tanggal]
-                //   ipfs.add(hashawal, (err, hash) => {
+                //   const datatelusur = ["Hash Awal : "+hashawal,"Petani : "+petani,"Ditanam di : "+tanam,"Keterangan : "+keterangan]
+                //   ipfs.add(datatelusur, (err, hash) => {
                 //     if(err){
                 //     return console.log(err);
                 //     }
-                //     console.log('https:/ipfs.infura.io/ipfs/'+hash,tanggal);
-                //     this.props.createPost(hash,jeniskopi,petani,tanam,keterangan,tanggal)
+                    
+                //     console.log('https:/ipfs.infura.io/ipfs/'+hash);
+                //     this.props.createPost('https:/ipfs.infura.io/ipfs/'+hashawal,'https:/ipfs.infura.io/ipfs/'+hash)
                 //     alert("Data Berhasil disimpan dengan hash awal sebagai berikut ( "+hash+" ) harap hash tersebut disimpan guna mencari data tersebut kembali..")
                 //     }
                 //   ) 
@@ -40,14 +61,15 @@ class Main3 extends Component {
                     id="hashawal"
                     type="input"
                     ref={(input) => { this.hashawal = input }}
+                    onChange={(e) => {this.onSearchChange(e)}}
                     className="form-control"
                     placeholder="hashawal ?"
                     required />
                 </div>
-                <button type="submit" className="btn btn-primary btn-block">Sumbit</button>
+                {/* <button type="submit" className="btn btn-primary btn-block">Sumbit</button> */}
               </form>
               <p>&nbsp;</p>
-              { this.props.posts.map((post, key) => {
+              { this.state.data.map((post, key) => {
                 return(
                   <div className="card mb-4" key={key} >
                     <div className="card-header">
@@ -62,11 +84,10 @@ class Main3 extends Component {
                     <ul id="postList" className="list-group list-group-flush">
                       <li className="list-group-item">
                         <p>Hash Awal : {post.hashawal}</p>
-                        <p>Jenis Kopi :{post.jeniskopi}</p>
-                        <p>Petani :{post.petani}</p>
-                        <p>Ditanam di :{post.tanam}</p>
-                        <p>Keterangan :{post.keterangan}</p>
-                        <p>Tanggal :{post.tanggal}</p>
+                        <p>Hash : {post.hash}</p>
+                        <p>Email :{post.email}</p>                        
+                        <p>Hak Akses : {post.hakakses}</p>                        
+                        <p>Tanggal : {post.tanggal}</p>
                       </li>
                     </ul>
                   </div>
@@ -80,4 +101,4 @@ class Main3 extends Component {
   }
 }
 
-export default Main3;
+export default MainTelusurData;

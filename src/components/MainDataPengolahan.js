@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Identicon from 'identicon.js';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-class MainDataAwal extends Component {
+class MainDataPengolahan extends Component {
 
   state = {
     startDate: new Date(),
@@ -43,37 +43,48 @@ class MainDataAwal extends Component {
                   event.preventDefault()
                   const IPFS = require('ipfs-mini');
                   const ipfs = new IPFS({host:'ipfs.infura.io' , port : 5001, protocol:'https'});
+                  const hashawal = this.hashawal.value
                   const nama = this.nama.value
                   const lokasi = this.lokasi.value
-                  const jeniskopi = this.state.jeniskopi
+                  const proses = this.proses.value
                   const keterangan = this.keterangan.value
                   const today =new Date()
                   const tanggal = today.toString()
-                  const tanggalpanen = this.state.startDate
-                  const Data = JSON.stringify({"nama":nama,"lokasi":lokasi,"jeniskopi":jeniskopi,"tanggalpanen":tanggalpanen,"Keterangan":keterangan})
+                  const tanggalpengolahan = this.state.startDate
+                  const Data = JSON.stringify({"nama":nama,"lokasi":lokasi,"tanggalpengolahan":tanggalpengolahan,"proses":proses,"Keterangan":keterangan})
                   ipfs.add(Data, (err, hash) => {
                     if(err){
                     return console.log(err);
                     }
                     console.log('https:/ipfs.infura.io/ipfs/'+hash);
-                    this.props.createPost(hash,hash,'email','hakakses',tanggal)
+                    this.props.createPost(hashawal,hash,'email','hakakses',tanggal)
                     alert("Data Berhasil disimpan dengan hash awal sebagai berikut ( "+hash+" ) harap hash tersebut disimpan guna mencari data tersebut kembali..")
                     }
                   ) 
                   
                 }}>
                 <div className="form-group mr-sm-2">
-                  <label>Nama Petani:</label>
+                <label>Hash Awal:</label>
+                  <input
+                    id="hashawal"
+                    type="text"
+                    ref={(input) => { this.hashawal = input }}
+                    className="form-control"
+                    placeholder="hashawal?"
+                    required />
+                </div>
+                <div className="form-group mr-sm-2">
+                <label>Nama Pengolah:</label>
                   <input
                     id="nama"
                     type="text"
                     ref={(input) => { this.nama = input }}
                     className="form-control"
-                    placeholder="Nama Petani?"
+                    placeholder="Nama Pengolah?"
                     required />
                 </div>
                 <div className="form-group mr-sm-2">
-                <label>Lokasi Kebun :</label>
+                <label>Lokasi Pengolahan :</label>
                   <input
                     id="lokasi"
                     type="text"
@@ -83,27 +94,21 @@ class MainDataAwal extends Component {
                     required />
                 </div>
                 <div className="form-group mr-sm-2">
-                <label>Jenis Kopi:</label>
-                <select
-                    className="form-control"
-                    name="jeniskopi"
-                    value={this.state.jeniskopi}
-                    onChange={this.onChangejeniskopi}
-                    validations={[required]}
-                  >
-                        {['Arabika', 'Robusta'].map(option => (
-                        <option key={option} value={option}>
-                            {option.charAt(0).toUpperCase() + option.slice(1)}
-                        </option>
-                        ))}
-                    </select>
-                </div>
-                    <div>
-                      <label>Jenis Kopi:</label>
+                      <label>Tanggal Pengolahan:</label>
                       <DatePicker
                       selected={this.state.startDate}
                       onChange={this.handleChange}
                       />
+                </div>
+                <div className="form-group mr-sm-2">
+                <label>Proses Pengolahan:</label>
+                  <input
+                    id="proses"
+                    type="text"
+                    ref={(input) => { this.proses = input }}
+                    className="form-control"
+                    placeholder="proses ?"
+                    required />
                 </div>
                 <div className="form-group mr-sm-2">
                 <label>Keterangan :</label>
@@ -126,4 +131,4 @@ class MainDataAwal extends Component {
   }
 }
 
-export default MainDataAwal;
+export default MainDataPengolahan;

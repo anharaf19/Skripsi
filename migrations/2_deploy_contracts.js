@@ -1,5 +1,5 @@
-const Dataawal = artifacts.require("Dataawal");
+const Data = artifacts.require("Data");
 
 module.exports = function(deployer) {
-  deployer.deploy(Dataawal);
+  deployer.deploy(Data);
 };

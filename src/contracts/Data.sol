@@ -1,6 +1,6 @@
 pragma solidity ^0.5.0;
 
-contract Dataawal {
+contract Data {
     string public name;
     uint public postCount = 0;
     mapping(uint => Post) public posts;
@@ -8,10 +8,9 @@ contract Dataawal {
     struct Post {
         uint id;
         string hashawal;
-        string jeniskopi;
-        string petani;
-        string tanam;
-        string keterangan;
+        string hash;
+        string email;
+        string hakakses;
         string tanggal;
         address  author;
     }
@@ -20,10 +19,9 @@ contract Dataawal {
     event PostCreated(
         uint id,
         string hashawal,
-        string jeniskopi,
-        string petani,
-        string tanam,
-        string keterangan,
+        string hash,
+        string email,
+        string hakakses,
         string tanggal,
         address  author
     );
@@ -33,17 +31,15 @@ contract Dataawal {
         name = "Anhar Ahyahuda Fitriardi";
     }
 
-    function createPost(string memory _hashawal,string memory _jeniskopi,string memory _petani,string memory _tanam,string memory _keterangan,string memory _tanggal   ) public {
+    function createPost(string memory _hashawal, string memory _hash, string memory _email,string memory _hakakses,string memory _tanggal) public {
         // Require valid content
         require(bytes(_hashawal).length > 0);
         // Increment the post count
         postCount ++;
         // Create the post
-        posts[postCount] = Post(postCount, _hashawal,_jeniskopi,_petani,_tanam,_keterangan,_tanggal, msg.sender);
+        posts[postCount] = Post(postCount, _hashawal,_hash, _email,_hakakses,_tanggal,msg.sender);
         // Trigger event
-        emit PostCreated(postCount, _hashawal,_jeniskopi,_petani,_tanam,_keterangan,_tanggal,  msg.sender);
+        emit PostCreated(postCount, _hashawal,_hash,_email,_hakakses,_tanggal, msg.sender);
     }
-
-
 
 }

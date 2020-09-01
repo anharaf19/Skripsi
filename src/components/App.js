@@ -15,15 +15,13 @@ import {
 
 import MainPage from "./index";
 import NotFoundPage from"./404";
-import DataAwal from"./DataAwal";
-import DataTelusur from"./DataTelusur";
 import standar from"./standar";
-import Adddata from"./Adddata";
-import telusurdata from"./telusurdata";
-import telusurdataawal from"./telusurdataawal";
-import telusurdatatelusur from"./telusurdatatelusur";
+import telusurdata from"./TelusurData";
 import Login from"./Login";
 import Register from"./Register";
+import TambahDataAwal from"./TambahDataAwal";
+import TambahDataDistribusi from"./TambahDataDistribusi";
+import TambahDataPengolahan from"./TambahDataPengolahan";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 class App extends Component {
@@ -95,13 +93,11 @@ class App extends Component {
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/404" component={NotFoundPage} />
-                <Route exact path="/DataAwal" component={DataAwal} />
-                <Route exact path="/DataTelusur" component={DataTelusur} />
                 <Route exact path="/standar" component={standar} />
-                <Route exact path="/Adddata" component={Adddata} />
                 <Route exact path="/telusurdata" component={telusurdata} />
-                <Route exact path="/telusurdataawal" component={telusurdataawal} />
-                <Route exact path="/telusurdatatelusur" component={telusurdatatelusur} />
+                <Route exact path="/TambahDataAwal" component={TambahDataAwal} />
+                <Route exact path="/TambahDataDistribusi" component={TambahDataDistribusi} />
+                <Route exact path="/TambahDataPengolahan" component={TambahDataPengolahan} />
                 <Redirect to="/404" />
                 </Switch>
               </Router>

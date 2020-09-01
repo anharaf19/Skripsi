@@ -2,16 +2,15 @@ import React, { Component } from 'react';
 import Web3 from 'web3';
 import Identicon from 'identicon.js';
 import './App.css';
-import Addhash from '../abis/Dataawal.json'
+import Addhash from '../abis/Data.json'
 import Navbar from './Navbar'
-import Main from './MainTelusurAwal'
-import telusurdata from './telusurdata';
-
-import {Link} from "react-router-dom";
+import Main from './MainDataAwal'
+import {Link} from "react-router-dom";  
 
 
 
-class telusurdataawal extends Component {
+
+class TambahDataAwal extends Component {
 
   async componentWillMount() {
     await this.loadWeb3()
@@ -56,6 +55,16 @@ class telusurdataawal extends Component {
       window.alert('Addhash contract not deployed to detected network.')
     }
   }
+
+  createPost(hashawal,hash,email,hakakses,tanggal) {
+    this.setState({ loading: true })
+    this.state.addhash.methods.createPost(hashawal,hash,email,hakakses,tanggal).send({ from: this.state.account })
+    .once('receipt', (receipt) => {
+      this.setState({ loading: false })
+    })
+  }
+
+
   constructor(props) {
     super(props)
     this.state = {
@@ -66,7 +75,7 @@ class telusurdataawal extends Component {
       loading: true
     }
 
-    // this.createPost = this.createPost.bind(this)
+    this.createPost = this.createPost.bind(this)
   }
 
   render() {
@@ -80,7 +89,7 @@ class telusurdataawal extends Component {
               createPost={this.createPost}
             />
         }
-                  <Link to='./telusurdata'>
+                        <Link to='./'>
                     <textbiasa>Kembali</textbiasa>
                 </Link>
       </div>
@@ -88,4 +97,4 @@ class telusurdataawal extends Component {
   }
 }
 
-export default telusurdataawal;
+export default TambahDataAwal;
