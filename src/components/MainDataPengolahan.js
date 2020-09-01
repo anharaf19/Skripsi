@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import Identicon from 'identicon.js';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import AuthService from "../services/auth.service";
 class MainDataPengolahan extends Component {
 
   state = {
     startDate: new Date(),
-    jeniskopi : 'Arabika'
+    jeniskopi : 'Arabika',
+    user: AuthService.getCurrentUser()
 
   };
  
@@ -51,13 +53,13 @@ class MainDataPengolahan extends Component {
                   const today =new Date()
                   const tanggal = today.toString()
                   const tanggalpengolahan = this.state.startDate
-                  const Data = JSON.stringify({"nama":nama,"lokasi":lokasi,"tanggalpengolahan":tanggalpengolahan,"proses":proses,"Keterangan":keterangan})
+                  const Data = JSON.stringify({"Nama":nama,"Lokasi":lokasi,"Tanggal Pengolahan":tanggalpengolahan,"Proses":proses,"Keterangan":keterangan})
                   ipfs.add(Data, (err, hash) => {
                     if(err){
                     return console.log(err);
                     }
                     console.log('https:/ipfs.infura.io/ipfs/'+hash);
-                    this.props.createPost(hashawal,hash,'email','hakakses',tanggal)
+                    this.props.createPost(hashawal,hash,this.state.user.email, this.state.user.hakakses,tanggal)
                     alert("Data Berhasil disimpan dengan hash awal sebagai berikut ( "+hash+" ) harap hash tersebut disimpan guna mencari data tersebut kembali..")
                     }
                   ) 

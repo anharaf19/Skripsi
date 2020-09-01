@@ -5,7 +5,7 @@ import './App.css';
 import Addhash from '../abis/Data.json'
 import Navbar from './Navbar'
 import Main from './MainTelusurData'
-
+import IPFS from "../services/ipfs.service";
 import {Link} from "react-router-dom";
 
 
@@ -45,7 +45,10 @@ class TelusurData extends Component {
       this.setState({ postCount })
       // Load Posts
       for (var i = 1; i <= postCount; i++) {
-        const post = await addhash.methods.posts(i).call()
+        let post = await addhash.methods.posts(i).call()
+        await IPFS.getData(post.hash).then((data) => {
+          post.IPFSData = data
+        })
         this.setState({
           posts: [...this.state.posts, post]
         })

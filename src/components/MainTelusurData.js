@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Identicon from 'identicon.js';
+import IPFS from "../services/ipfs.service";
 
 class MainTelusurData extends Component {
 
@@ -88,6 +89,11 @@ class MainTelusurData extends Component {
                         <p>Email :{post.email}</p>                        
                         <p>Hak Akses : {post.hakakses}</p>                        
                         <p>Tanggal : {post.tanggal}</p>
+                          { 
+                            Object.keys(post.IPFSData).map(function(key) {
+                              return <p>{key} : {post.IPFSData[key]}</p>
+                            })
+                          }
                       </li>
                     </ul>
                   </div>

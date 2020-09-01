@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import Identicon from 'identicon.js';
 import AuthService from "../services/auth.service";
-import { withRouter } from "react-router-dom";
+import { useLocation } from 'react-router-dom'
 
 class Navbar extends Component {
   state = {
-    isLoggedIn: !!AuthService.getCurrentUser()
+    isLoggedIn: !!AuthService.getCurrentUser(),
+    domain: (window.location.href).split("/")[0] + "//" + (window.location.href).split("/")[2],
   }
 
   logout = () => {
     AuthService.logout();
-    withRouter(({ history }) => history.push('/login'));
+    document.location.href = this.state.domain + '/login'
     window.location.reload();
   }
 
@@ -26,7 +27,7 @@ class Navbar extends Component {
         </a>
         <ul className="navbar-nav px-3">
           <li className="nav-item text-nowrap d-none d-sm-none d-sm-block">
-            <button className="btn btn-sm btn-default mr-2 text-white" onClick={this.logout}>Logout</button>
+            {window.location.pathname == '/' ? (<button className="btn btn-sm btn-default mr-2 text-white" onClick={this.logout}>Logout</button>) : ''}
             <small className="text-secondary">
               <small id="account">{this.props.account}</small>
             </small>
