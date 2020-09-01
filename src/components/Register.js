@@ -64,6 +64,13 @@ export default class Register extends Component {
       message: ""
     };
   }
+  
+  componentDidMount() {
+    if (!!AuthService.getCurrentUser()) {
+      this.props.history.push("/");
+      window.location.reload();
+    }
+  }
 
   onChangeName(e) {
     this.setState({
@@ -145,72 +152,87 @@ export default class Register extends Component {
 
   render() {
     return (
-      <div className="col-md-12">
+      <div className="col-md-6 offset-3">
         <div className="card card-container">
+
+          <div class="card-header text-left font-weight-bold">
+            Login
+          </div>
 
           <Form
             onSubmit={this.handleRegister}
             ref={c => {
               this.form = c;
             }}
+            className="m-2"
           >
             {!this.state.successful && (
               <div>
-                <div className="form-group">
-                  <label htmlFor="nama">Nama</label>
-                  <Input
-                    type="text"
-                    className="form-control"
-                    name="nama"
-                    value={this.state.nama}
-                    onChange={this.onChangeName}
-                    validations={[required, vnama]}
-                  />
+                <div className="form-group row">
+                  <label htmlFor="nama" className="col-sm-2 col-form-label">Nama</label>
+                  <div className="col-sm-10">
+                    <Input
+                      type="text"
+                      className="form-control"
+                      name="nama"
+                      value={this.state.nama}
+                      onChange={this.onChangeName}
+                      validations={[required, vnama]}
+                    />
+                  </div>
                 </div>
 
-                <div className="form-group">
-                  <label htmlFor="hakakses">Hak Akses</label>
-                  <select
-                    className="form-control"
-                    name="hakakses"
-                    value={this.state.hakakses}
-                    onChange={this.onChangeHakAkses}
-                    validations={[required]}
-                  >
-                        {['petani', 'distributor', 'pengolah', 'konsumen'].map(option => (
-                        <option key={option} value={option}>
-                            {option.charAt(0).toUpperCase() + option.slice(1)}
-                        </option>
-                        ))}
+                <div className="form-group row">
+                  <label htmlFor="hakakses" className="col-sm-2 col-form-label">Hak Akses</label>
+                  <div className="col-sm-10">
+                    <select
+                      className="form-control"
+                      name="hakakses"
+                      value={this.state.hakakses}
+                      onChange={this.onChangeHakAkses}
+                      validations={[required]}
+                    >
+                          {['petani', 'distributor', 'pengolah', 'konsumen'].map(option => (
+                          <option key={option} value={option}>
+                              {option.charAt(0).toUpperCase() + option.slice(1)}
+                          </option>
+                          ))}
                     </select>
+                  </div>
                 </div>
 
-                <div className="form-group">
-                  <label htmlFor="email">Email</label>
-                  <Input
-                    type="text"
-                    className="form-control"
-                    name="email"
-                    value={this.state.email}
-                    onChange={this.onChangeEmail}
-                    validations={[required, email]}
-                  />
+                <div className="form-group row">
+                  <label htmlFor="email" className="col-sm-2 col-form-label">Email</label>
+                  <div className="col-sm-10">
+                    <Input
+                      type="text"
+                      className="form-control"
+                      name="email"
+                      value={this.state.email}
+                      onChange={this.onChangeEmail}
+                      validations={[required, email]}
+                    />
+                  </div>
                 </div>
 
-                <div className="form-group">
-                  <label htmlFor="password">Password</label>
-                  <Input
-                    type="password"
-                    className="form-control"
-                    name="password"
-                    value={this.state.password}
-                    onChange={this.onChangePassword}
-                    validations={[required, vpassword]}
-                  />
+                <div className="form-group row">
+                  <label htmlFor="password" className="col-sm-2 col-form-label">Password</label>
+                  <div className="col-sm-10">
+                    <Input
+                      type="password"
+                      className="form-control"
+                      name="password"
+                      value={this.state.password}
+                      onChange={this.onChangePassword}
+                      validations={[required, vpassword]}
+                    />
+                  </div>
                 </div>
 
-                <div className="form-group">
-                  <button className="btn btn-primary btn-block">Sign Up</button>
+                <div className="form-group row">
+                  <div className="col-md-10 offset-md-2">
+                    <button className="btn btn-primary btn-block">Sign Up</button>
+                  </div>
                 </div>
               </div>
             )}

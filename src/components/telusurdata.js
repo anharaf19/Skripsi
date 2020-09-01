@@ -10,7 +10,7 @@ import {Link} from "react-router-dom";
 
 
 
-class telusurdata extends Component {
+class TelusurData extends Component {
 
   async componentWillMount() {
     await this.loadWeb3()
@@ -87,4 +87,4 @@ class telusurdata extends Component {
   }
 }
 
-export default telusurdata;
+export default TelusurData;

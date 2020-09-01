@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
+import {Link} from "react-router-dom";
 
 import AuthService from "../services/auth.service";
 
@@ -28,6 +29,13 @@ export default class Login extends Component {
       loading: false,
       message: ""
     };
+  }
+  
+  componentDidMount() {
+    if (!!AuthService.getCurrentUser()) {
+      this.props.history.push("/");
+      window.location.reload();
+    }
   }
 
   onChangeEmail(e) {
@@ -81,49 +89,65 @@ export default class Login extends Component {
 
   render() {
     return (
-      <div className="col-md-6">
+      <div className="col-md-6 offset-3">
         <div className="card card-container">
 
+          <div class="card-header text-left font-weight-bold">
+            Login
+          </div>
           <Form
             onSubmit={this.handleLogin}
             ref={c => {
               this.form = c;
             }}
+            className="m-2"
           >
-            <div className="form-group">
-              <label htmlFor="email">Email</label>
-              <Input
-                type="text"
-                className="form-control"
-                name="email"
-                value={this.state.email}
-                onChange={this.onChangeEmail}
-                validations={[required]}
-              />
+            <div className="form-group row">
+              <label htmlFor="email" className="col-sm-2 col-form-label">Email</label>
+              <div className="col-sm-10">
+                <Input
+                  type="text"
+                  className="form-control"
+                  name="email"
+                  value={this.state.email}
+                  onChange={this.onChangeEmail}
+                  validations={[required]}
+                />
+              </div>
             </div>
 
-            <div className="form-group">
-              <label htmlFor="password">Password</label>
-              <Input
-                type="password"
-                className="form-control"
-                name="password"
-                value={this.state.password}
-                onChange={this.onChangePassword}
-                validations={[required]}
-              />
+            <div className="form-group row">
+              <label htmlFor="email" className="col-sm-2 col-form-label">Password</label>
+              <div className="col-sm-10">
+                <Input
+                  type="password"
+                  className="form-control"
+                  name="password"
+                  value={this.state.password}
+                  onChange={this.onChangePassword}
+                  validations={[required]}
+                />
+              </div>
             </div>
 
-            <div className="form-group">
-              <button
-                className="btn btn-primary btn-block"
-                disabled={this.state.loading}
-              >
-                {this.state.loading && (
-                  <span className="spinner-border spinner-border-sm"></span>
-                )}
-                <span>Login</span>
-              </button>
+            <div className="form-group row">
+              <div className="col-md-10 offset-md-2">
+                <button
+                  className="btn btn-primary btn-block"
+                  disabled={this.state.loading}
+                >
+                  {this.state.loading && (
+                    <span className="spinner-border spinner-border-sm"></span>
+                  )}
+                  <span>Login</span>
+                </button>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-md-10 offset-md-2">
+                <Link to="/register">Register</Link>
+              </div>
             </div>
 
             {this.state.message && (
