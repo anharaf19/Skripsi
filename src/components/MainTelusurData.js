@@ -5,7 +5,7 @@ import IPFS from "../services/ipfs.service";
 class MainTelusurData extends Component {
 
   componentDidMount() {
-    console.log(this.props.posts);
+    // console.log(this.props.posts);
   }
 
   state = {
@@ -20,10 +20,27 @@ class MainTelusurData extends Component {
       var dateA = new Date(a.tanggal), dateB = new Date(b.tanggal);
       return dateA - dateB;
     })
-      
+    
     this.setState({
-      data: e.target.value ? sorted.filter(data => data.hashawal == e.target.value) : sorted
+      data: e.target.value ? this.chainSearch(e.target.value, []) : sorted
     })
+  }
+
+  findByHash(hash) {
+    return this.props.posts.find(data => data.hash === hash)
+  }
+
+  chainSearch(hash, collectedData = []) {
+    const found = this.findByHash(hash)
+
+    if (found) {
+      collectedData.push(found)
+      if (found.hash !== found.hashawal && found.hashawal !== '0') {
+        return this.chainSearch(found.hashawal, collectedData)
+      }
+    }
+
+    return collectedData
   }
 
   render() {
