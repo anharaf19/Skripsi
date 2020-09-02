@@ -101,7 +101,7 @@ class MainDataAwal extends Component {
                     </select>
                 </div>
                     <div>
-                      <label>Jenis Kopi:</label>
+                      <label>Tanggal Panen:</label>
                       <DatePicker
                       selected={this.state.startDate}
                       onChange={this.handleChange}

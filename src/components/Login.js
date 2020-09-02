@@ -89,7 +89,7 @@ export default class Login extends Component {
 
   render() {
     return (
-      <div className="col-md-6 offset-3">
+      <div className="col-md-6">
         <div className="card card-container">
 
           <div class="card-header text-left font-weight-bold">

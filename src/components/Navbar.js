@@ -7,6 +7,7 @@ class Navbar extends Component {
   state = {
     isLoggedIn: !!AuthService.getCurrentUser(),
     domain: (window.location.href).split("/")[0] + "//" + (window.location.href).split("/")[2],
+    user: AuthService.getCurrentUser()
   }
 
   logout = () => {
@@ -29,7 +30,7 @@ class Navbar extends Component {
           <li className="nav-item text-nowrap d-none d-sm-none d-sm-block">
             {window.location.pathname == '/' ? (<button className="btn btn-sm btn-default mr-2 text-white" onClick={this.logout}>Logout</button>) : ''}
             <small className="text-secondary">
-              <small id="account">{this.props.account}</small>
+              <small id="account">{this.state.user.email}</small>
             </small>
             { this.props.account
               ? <img

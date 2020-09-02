@@ -60,7 +60,7 @@ class MainDataPengolahan extends Component {
                     }
                     console.log('https:/ipfs.infura.io/ipfs/'+hash);
                     this.props.createPost(hashawal,hash,this.state.user.email, this.state.user.hakakses,tanggal)
-                    alert("Data Berhasil disimpan dengan hash awal sebagai berikut ( "+hash+" ) harap hash tersebut disimpan guna mencari data tersebut kembali..")
+                    alert("Data Berhasil disimpan")
                     }
                   ) 
                   

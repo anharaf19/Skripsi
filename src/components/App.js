@@ -4,7 +4,7 @@ import './App.css';
 import Navbar from './Navbar';
 import Web3 from 'web3';
 import Identicon from 'identicon.js';
-import Addhash from '../abis/Datatelusur.json';
+import Addhash from '../abis/Data.json';
 import {
   BrowserRouter as Router,
   Route,
@@ -94,7 +94,7 @@ class App extends Component {
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/404" component={NotFoundPage} />
                 <Route exact path="/standar" component={standar} />
-                <Route exact path="/telusurdata" component={telusurdata} />
+                <Route exact path="/TelusurData" component={telusurdata} />
                 <Route exact path="/TambahDataAwal" component={TambahDataAwal} />
                 <Route exact path="/TambahDataDistribusi" component={TambahDataDistribusi} />
                 <Route exact path="/TambahDataPengolahan" component={TambahDataPengolahan} />
